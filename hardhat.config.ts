@@ -1,4 +1,4 @@
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 import { nodeAPIKey } from "./config";
 import "@nomicfoundation/hardhat-toolbox";
 
@@ -13,13 +13,21 @@ const config: HardhatUserConfig = {
       }
     ]
   },
-  networks:{
-    hardhat:{
-      forking:{
-        url: nodeAPIKey
-      }
-    }
-  }
+  // networks:{
+  //   hardhat:{
+  //     forking:{
+  //       url: nodeAPIKey
+  //     }
+  //   }
+  // }
 };
+
+task("balance", "Prints the balance of an address")
+  .addParam("account", "Address of the account")
+  .setAction(async (taskArgs, hre) => {
+    const address = taskArgs.account;
+    const balance = await hre.ethers.provider.getBalance(address);
+    console.log(hre.ethers.utils.formatEther(balance), "ETH")
+  })
 
 export default config;
