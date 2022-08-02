@@ -12,10 +12,10 @@ describe("Exploit GateKeeperOne", function() {
         const gatekeeperAddress = await gateKeeper.address
         const gatekeeperExploiter = await GatekeeperExploiter.deploy(gatekeeperAddress);
 
-        const instance1 = await gateKeeper.deployed();
-        const instance2 = await gatekeeperExploiter.deployed();
+        // const instance1 = await gateKeeper.deployed();
+        // const instance2 = await gatekeeperExploiter.deployed();
 
-        return {gateKeeper: instance1, gatekeeperExploiter: instance2}
+        return {gateKeeper, gatekeeperExploiter}
     }
 
     it("Should have the address of the owner set to the creator", async () => {
@@ -23,6 +23,15 @@ describe("Exploit GateKeeperOne", function() {
         const [owner] = await hre.ethers.getSigners();
         expect(await gatekeeperExploiter.ownerAddress()).to.equal(owner.address)
     })
+
+    it("Should have set the victim address to the exploit contract", async () => {
+        const {gateKeeper, gatekeeperExploiter} = await loadFixture(deployGateKeeper);
+        const gateKeeperAddress = gateKeeper.address;
+        const victimAddress = await gatekeeperExploiter.victim();
+        expect(victimAddress).to.equal(gateKeeperAddress);
+    })
+
+    
     
     xit("Should be able to exploit the gateKeeperOne contract", async () => {
         const {gateKeeper, gatekeeperExploiter} = await loadFixture(deployGateKeeper);
