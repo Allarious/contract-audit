@@ -7,7 +7,6 @@ contract GatekeeperOne {
 
   using SafeMath for uint256;
   address public entrant;
-  uint public gas;
 
   modifier gateOne() {
     require(msg.sender != tx.origin);
@@ -15,7 +14,6 @@ contract GatekeeperOne {
   }
 
   modifier gateTwo() {
-    gas = gasleft().mod(8191);
     require(gasleft().mod(8191) == 0);
     _;
   }
