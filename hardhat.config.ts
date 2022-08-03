@@ -13,13 +13,13 @@ const config: HardhatUserConfig = {
       }
     ]
   },
-  // networks:{
-  //   hardhat:{
-  //     forking:{
-  //       url: nodeAPIKey
-  //     }
-  //   }
-  // }
+  networks:{
+    hardhat:{
+      forking:{
+        url: nodeAPIKey
+      }
+    }
+  }
 };
 
 task("balance", "Prints the balance of an address")
