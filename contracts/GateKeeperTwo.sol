@@ -27,13 +27,19 @@ contract GatekeeperTwo {
 
   modifier gateThree(bytes8 _gateKey) {
     console.log("Start of Gate 3");
-    require(uint64(bytes8(keccak256(abi.encodePacked(msg.sender)))) ^ uint64(_gateKey) == uint64(0) - 1);
+    //"0x77e352f34178AfC444B0CB2aa1CF4a72d87c2392"
+    console.log(uint64(bytes8(keccak256(abi.encodePacked("0x867BeC235CF95beeF8f1dFf907DB2BdcfC154869")))) ^ uint64(_gateKey));
+    console.log(uint64(0) - 1);
+    console.logBytes8(bytes8(uint64(bytes8(keccak256(abi.encodePacked("0x867BeC235CF95beeF8f1dFf907DB2BdcfC154869")))) ^ (uint64(0) - 1)));
+    // console.log(uint64(bytes8(0x198fde8d32ec8b70)));
+    require(uint64(bytes8(keccak256(abi.encodePacked("0x867BeC235CF95beeF8f1dFf907DB2BdcfC154869")))) ^ uint64(_gateKey) == uint64(0) - 1);
     console.log("End of Gate 3");
     _;
   }
 
   function enter(bytes8 _gateKey) public gateOne gateTwo gateThree(_gateKey) returns (bool) {
     entrant = tx.origin;
+    console.log(entrant);
     return true;
   }
 }
