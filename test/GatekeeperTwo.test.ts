@@ -19,7 +19,7 @@ describe("GateKeeperTwoExploit", function () {
         // exploit = await ExploitFactory.attach(exploitAddress);
 
         contract = await ContractFactory.deploy();
-        exploit = await ExploitFactory.deploy(contract.address, "0x0c70bde084f619bd");
+        exploit = await ExploitFactory.deploy(contract.address);
     });
 
     it("should have the victim address set correctly", async () => {
@@ -32,8 +32,8 @@ describe("GateKeeperTwoExploit", function () {
         expect(ownerAddress[0]).to.equal(owner.address);
     });
 
-    xit("should be able to exploit the victim contract", async () => {
-        const output = await exploit.functions.exploit("0x0000000000000000");
-        console.log(output);
-    });
+    // xit("should be able to exploit the victim contract", async () => {
+    //     const output = await exploit.functions.exploit("0x0000000000000000");
+    //     console.log(output);
+    // });
 })
